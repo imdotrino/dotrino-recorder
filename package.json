@@ -5,6 +5,11 @@
   "description": "Grabadora de audio de calidad: WAV sin pérdida o AAC, medidor de nivel y ganancia. Las grabaciones se quedan en tu aparato.",
   "license": "MIT",
   "dotrino": {
-    "platforms": ["pwa", "ios", "android"]
+    "kind": "app",
+    "platforms": [
+      "pwa",
+      "ios",
+      "android"
+    ]
   }
 }
