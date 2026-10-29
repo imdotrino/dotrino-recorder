@@ -1,0 +1,17 @@
+.claude/
+node_modules
+dist
+build
+.env
+.DS_Store
+# Apps nativas (CONVENCIONES §16)
+android/.gradle
+android/.kotlin
+android/local.properties
+android/app/build
+*.jks
+ios/*.xcodeproj
+ios/build
+ios/DerivedData
+ios/Recorder/Info.plist
+ios/Recorder/Recorder.entitlements

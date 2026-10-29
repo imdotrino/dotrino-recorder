@@ -1,0 +1,10 @@
+{
+  "name": "dotrino-recorder",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Grabadora de audio de calidad: WAV sin pérdida o AAC, medidor de nivel y ganancia. Las grabaciones se quedan en tu aparato.",
+  "license": "MIT",
+  "dotrino": {
+    "platforms": ["pwa", "ios", "android"]
+  }
+}

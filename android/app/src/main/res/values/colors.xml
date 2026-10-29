@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Lo propio de la grabadora; el resto de la paleta es la del ecosistema (dotrino_*). -->
+<resources>
+    <color name="rec_surface2">#1C2942</color>
+    <color name="rec_red">#E5484D</color>
+    <color name="rec_amber">#F5A524</color>
+    <color name="rec_green">#3CCB7F</color>
+</resources>
