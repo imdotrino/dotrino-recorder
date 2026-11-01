@@ -36,7 +36,15 @@ class Library(private val ctx: Context) {
         val bytes: Long,
         val createdAt: Long,
         val recovered: Boolean = false,
-    )
+        /** La llave de la copia en el node y el hash de esa copia. Se apuntan antes de subir, para retomar. */
+        val syncKey: String? = null,
+        val syncCid: String? = null,
+        /** Lo que ya confirmó el node: si cambia el nombre, hay que subir otra ficha. */
+        val syncedCid: String? = null,
+        val syncedName: String? = null,
+    ) {
+        fun upToDate() = syncedCid != null && syncedName == name
+    }
 
     companion object {
         const val THREAD = "recorder.recordings"

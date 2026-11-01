@@ -29,6 +29,9 @@ pasan a salir de ella.
   plano y con la pantalla apagada.
 - `Library.kt` — los bytes en la carpeta privada de la app; el índice (nombre, formato, duración)
   en `DotrinoStore`, hilo `recorder.recordings`. Un archivo sin ficha se recupera al abrir.
+- `Sync.kt` — copia las grabaciones al content node de la cuenta (`ContentNodeClient`). Por WebRTC
+  directo, sola. Por TURN o proxio propios, queda a la vista y pregunta. Por los de Dotrino no sube
+  (`dotrino-content/docs/DISENO.md` §7.1). En la PC se abren con `dotrino-content gui`.
 - `RecordingProvider.kt` — comparte una grabación de solo lectura, sin AndroidX.
 
 ## Desarrollo
@@ -44,8 +47,7 @@ cd dotrino-recorder/android
 ## Pendiente
 
 - PWA e iOS.
-- Respaldo cifrado de las grabaciones: el content node acepta hoy objetos de hasta 256 KB y
-  `dotrino-native` no tiene cliente de content; una grabación de un minuto ya pasa de eso.
+- Grabar video, en esta misma app: otro motor de captura sobre la misma lista y la misma copia (dueño, 2026-11-01).
 - Publicar en Google Play (`com.dotrino.recorder`).
 
 MIT.

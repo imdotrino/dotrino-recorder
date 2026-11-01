@@ -75,7 +75,17 @@
     "err.read-failed": "Se cortó la lectura del micrófono ({detail}). Lo grabado hasta ahí está guardado.",
     "err.wav-full": "Se llegó al tamaño máximo de un WAV (4 GB). Lo grabado está guardado; empieza otra grabación.",
     "err.close-failed": "No se pudo cerrar bien el archivo. Puede que el final de la grabación esté dañado.",
-    "err.io": "No se pudo escribir la grabación ({detail}). ¿Queda espacio? Lo grabado hasta ahí está guardado."
+    "err.io": "No se pudo escribir la grabación ({detail}). ¿Queda espacio? Lo grabado hasta ahí está guardado.",
+    "syncChannel": "Copia en tu computadora",
+    "syncNote": "Guardando tus grabaciones en tu computadora",
+    "syncUploading": "Copiando a tu computadora: {percent}%",
+    "syncDone": "Copia guardada en tu computadora",
+    "syncWaitDirect": "Se copiará cuando el teléfono y tu computadora puedan conectarse directamente",
+    "syncNeeded": "Falta copiarla a tu computadora. Toca para copiar",
+    "syncAskTitle": "¿Copiar por tu servidor?",
+    "syncAskText": "No hay conexión directa con tu computadora. La copia pasará cifrada por tu propio servidor, y el tráfico corre por tu cuenta.",
+    "syncAskOk": "Copiar",
+    "syncFailed": "No se pudo copiar ({code}). Toca para reintentar"
   },
   "en": {
     "appName": "Recorder",
@@ -153,6 +163,16 @@
     "err.read-failed": "Reading from the microphone stopped ({detail}). What was recorded up to then is saved.",
     "err.wav-full": "A WAV reached its maximum size (4 GB). What was recorded is saved; start another recording.",
     "err.close-failed": "Could not close the file properly. The end of the recording may be damaged.",
-    "err.io": "Could not write the recording ({detail}). Is there space left? What was recorded up to then is saved."
+    "err.io": "Could not write the recording ({detail}). Is there space left? What was recorded up to then is saved.",
+    "syncChannel": "Copy on your computer",
+    "syncNote": "Saving your recordings to your computer",
+    "syncUploading": "Copying to your computer: {percent}%",
+    "syncDone": "Copy saved on your computer",
+    "syncWaitDirect": "It will be copied when your phone and computer can connect directly",
+    "syncNeeded": "Not copied to your computer yet. Tap to copy",
+    "syncAskTitle": "Copy through your server?",
+    "syncAskText": "There is no direct connection to your computer. The copy will go encrypted through your own server, and you pay for the traffic.",
+    "syncAskOk": "Copy",
+    "syncFailed": "Could not copy it ({code}). Tap to try again"
   }
 }

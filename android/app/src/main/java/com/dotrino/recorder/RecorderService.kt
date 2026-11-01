@@ -70,6 +70,8 @@ class RecorderService : Service() {
 
     private fun finish() {
         off?.invoke(); off = null
+        // Antes de soltar el primer plano: desde segundo plano Android no deja arrancar otro servicio.
+        Sync.kick(this)
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }

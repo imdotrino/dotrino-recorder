@@ -43,6 +43,8 @@ class MainActivity : Activity() {
     private var settings = Settings()
     private val main = Handler(Looper.getMainLooper())
     private var off: (() -> Unit)? = null
+    private var offSync: (() -> Unit)? = null
+    private var netCallback: android.net.ConnectivityManager.NetworkCallback? = null
     private var lastState: Engine.State? = null
 
     private lateinit var timeView: TextView
@@ -84,10 +86,20 @@ class MainActivity : Activity() {
         if (Engine.state.mode == Engine.Mode.IDLE) lib.recoverOrphans(null)
         renderList()
         off = Engine.listen { onState(it) }
+        offSync = Sync.listen { renderList() }
+        val cm = getSystemService(android.net.ConnectivityManager::class.java)
+        val cb = object : android.net.ConnectivityManager.NetworkCallback() {
+            override fun onAvailable(network: android.net.Network) { main.post { Sync.kick(this@MainActivity) } }
+        }
+        cm.registerDefaultNetworkCallback(cb)   // avisa de la red actual al registrarse: eso ya intenta
+        netCallback = cb
     }
 
     override fun onStop() {
         off?.invoke(); off = null
+        offSync?.invoke(); offSync = null
+        netCallback?.let { getSystemService(android.net.ConnectivityManager::class.java).unregisterNetworkCallback(it) }
+        netCallback = null
         // Probar el nivel es solo con la pantalla delante: el micrófono no se queda abierto.
         if (Engine.state.mode == Engine.Mode.MONITOR) Engine.stop()
         stopPlayback()
@@ -369,6 +381,7 @@ class MainActivity : Activity() {
         val meta = listOf(dur, size(r.bytes), describe(r.format, r.sampleRate, r.channels)).joinToString(" · ") +
             if (r.recovered) " · " + t("recovered") else ""
         addView(label(meta, 13f, col(SR.color.dotrino_muted)).apply { setPadding(0, px(2), 0, px(6)) })
+        syncLine(r)?.let { addView(it) }
         val pos = label("", 13f, col(SR.color.dotrino_accent), bold = true)
         positions[r.id] = pos
         addView(LinearLayout(this@MainActivity).apply {
@@ -383,6 +396,27 @@ class MainActivity : Activity() {
             addView(View(this@MainActivity), LinearLayout.LayoutParams(0, 1, 1f))
             addView(pos)
         })
+    }
+
+    /** Dónde está la copia de esta grabación. Sin node en la cuenta no se dice nada. */
+    private fun syncLine(r: Library.Recording): View? {
+        val s = Sync.status
+        fun line(text: String, color: Int) = label(text, 13f, color).apply { setPadding(0, 0, 0, px(6)); tag = "sync-${r.id}" }
+        if (s is Sync.Status.Uploading && s.id == r.id) return line(t("syncUploading", "percent" to s.percent.toString()), col(SR.color.dotrino_accent))
+        if (r.upToDate()) return line(t("syncDone"), col(SR.color.dotrino_muted))
+        return when (s) {
+            Sync.Status.WaitingDirect -> line(t("syncWaitDirect"), col(SR.color.dotrino_muted))
+            Sync.Status.Ask -> line(t("syncNeeded"), col(SR.color.dotrino_accent)).apply {
+                setTypeface(typeface, android.graphics.Typeface.BOLD)
+                setOnClickListener {
+                    ask(t("syncAskTitle"), t("syncAskText"), t("syncAskOk")) { Sync.kick(this@MainActivity, allowOwnNetwork = true) }
+                }
+            }
+            is Sync.Status.Failed -> line(t("syncFailed", "code" to s.code), col(R.color.rec_amber)).apply {
+                setOnClickListener { Sync.kick(this@MainActivity) }
+            }
+            else -> null
+        }
     }
 
     private fun togglePlay(r: Library.Recording) {
