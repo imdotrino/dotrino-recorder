@@ -15,3 +15,5 @@ ios/build
 ios/DerivedData
 ios/Recorder/Info.plist
 ios/Recorder/Recorder.entitlements
+# PWA (Vite)
+test-results/

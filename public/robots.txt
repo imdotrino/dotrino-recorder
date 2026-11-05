@@ -1,0 +1,6 @@
+# Solo la cáscara pública de la herramienta es indexable. Las grabaciones viven en el
+# navegador de cada persona y nunca llegan al servidor.
+User-agent: *
+Allow: /
+
+Sitemap: https://recorder.dotrino.com/sitemap.xml
